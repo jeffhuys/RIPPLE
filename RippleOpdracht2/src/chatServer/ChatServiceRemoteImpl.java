@@ -48,9 +48,11 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
             db.open(true);
             Logger.getLogger("com.almworks.sqlite4java").setLevel(Level.OFF);
             // Check if user is registered
-            SQLiteStatement st = db.prepare("SELECT * FROM Users WHERE username = '" + username + "'");
+            SQLiteStatement st = db.prepare("SELECT * FROM Users WHERE username = ? AND password = ?");
             try {
                 //st.bind(1, minimumQuantity);
+                st.bind(1, username);
+                st.bind(2, password);
                 st.step();
                 usernameFromDB = st.columnString(0);
                 passwordFromDB = st.columnString(1);
