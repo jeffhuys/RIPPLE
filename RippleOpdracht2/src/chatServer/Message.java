@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
     String message;
     String user;
+    String recipient;
     public Message(){
         message = "Standard message";
         user = "Standard user";

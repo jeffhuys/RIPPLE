@@ -44,8 +44,11 @@ public class ChatClient {
     }
 
     public static void main(String[] args) throws RemoteException {
-        //ChatClient chatClient = new ChatClient();
-        System.out.println("You started the wrong file, mate. Run GUI.java!");
+        ChatClient chatClient = new ChatClient();
+        if(chatClient.connect("mau", "mau")) {
+            chatClient.chat();
+        }
+        //System.out.println("You started the wrong file, mate. Run GUI.java!");
     }
 
     public void printMessage() throws RemoteException {
