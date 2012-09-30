@@ -36,11 +36,8 @@ public class ChatClient {
         System.out.println("Getting last 5 messages...");
         int messages = remoteService.messagesLength();
         System.out.println("DEBUG: There are " + messages + " messages on the server.");
-        
-        for(int i = messages - 5; i < messages; i++) {
-            if(i >= 0) {
-                System.out.println(remoteService.getMessage(i).GetMessage());
-            }
+        for(int i = messages - ((messages >= 5) ? 5 : messages); i < messages; i++) {
+             System.out.println(remoteService.getMessage(i).GetMessage());
         }
         
     
