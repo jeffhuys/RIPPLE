@@ -17,13 +17,13 @@ public class ChatClient {
 
     public ChatServiceRemoteInterface remoteService;
 
-    public boolean connect() {
+    public boolean connect(String username, String password) {
         boolean login = false;
         try {
             remoteService = (ChatServiceRemoteInterface) Naming.lookup("rmi://127.0.0.1/ChatService");
             Random random = new Random();
             String test = remoteService.sendMessage("Rnd: " + random.nextInt());
-            login = remoteService.login("jeffhuys", "testpass");
+            login = remoteService.login(username, password);
             //System.out.println(test);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -37,9 +37,11 @@ public class ChatClient {
         int messages = remoteService.messagesLength();
         System.out.println("DEBUG: There are " + messages + " messages on the server.");
         
+        int x = 1;
         for(int i = messages - 5; i < messages; i++) {
             if(i >= 0) {
-                System.out.println(remoteService.getMessage(i).GetMessage());
+                System.out.println("Message " + (x) + ": " + remoteService.getMessage(i).GetMessage());
+                x++;
             }
         }
         
@@ -47,13 +49,8 @@ public class ChatClient {
     }
 
     public static void main(String[] args) throws RemoteException {
-        ChatClient chatClient = new ChatClient();
-        boolean login = chatClient.connect();
-        if (login) {
-            chatClient.chat();
-        } else {
-            System.exit(1);
-        }
+        //ChatClient chatClient = new ChatClient();
+        System.out.println("You started the wrong file, mate. Run GUI.java!");
     }
 
     public void printMessage() throws RemoteException {
