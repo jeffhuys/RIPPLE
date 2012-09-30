@@ -10,15 +10,18 @@ import java.io.Serializable;
  *
  * @author Acer
  */
-public class messages implements Serializable{
+public class Message implements Serializable{
     String message;
     String user;
-    public messages(){
+    public Message(){
         message = "Standard message";
         user = "Standard user";
     }
-    public messages(String mess, String usr){
+    public Message(String mess, String usr){
         message = mess;
         user = usr;
+    }
+    public String GetMessage() {
+        return message;
     }
 }
