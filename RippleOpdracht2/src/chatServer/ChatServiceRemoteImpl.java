@@ -71,4 +71,22 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
     public int messagesLength() throws RemoteException {
         return messages.size();
     }
+
+    public void register(String username, String password) throws RemoteException {
+        try {
+            // Registers a new user
+            // WARNING WARNING WARNING
+            // TODO: SQL INJECTION IS POSSIBLE WITH THIS METHOD!
+            //       FIX THIS ASAP!
+                SQLiteConnection db = new SQLiteConnection(new File("src/users.db"));
+                db.open(true);
+                Logger.getLogger("com.almworks.sqlite4java").setLevel(Level.OFF);
+                // Check if user is registered
+                SQLiteStatement st = db.prepare("insert into Users (username,password) values ('" + username + "','" + password + "');");
+                st.step();
+                db.dispose();
+        } catch (SQLiteException ex) {
+            Logger.getLogger(ChatServiceRemoteImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

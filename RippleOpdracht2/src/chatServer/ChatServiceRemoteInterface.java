@@ -8,6 +8,7 @@ public interface ChatServiceRemoteInterface extends Remote{
     public Message getLastMessage() throws RemoteException;
     public Message getMessage(int messageID) throws RemoteException;
     public boolean login(String username, String password) throws RemoteException;
+    public void register(String username, String password) throws RemoteException;
 
     public int messagesLength() throws RemoteException;
     

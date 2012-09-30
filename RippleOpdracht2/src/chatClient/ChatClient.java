@@ -40,6 +40,8 @@ public class ChatClient {
              System.out.println(remoteService.getMessage(i).GetMessage());
         }
         
+        //remoteService.register("etstatast", "peopaPROPA");
+        
     
     }
 
@@ -47,6 +49,7 @@ public class ChatClient {
         ChatClient chatClient = new ChatClient();
         if(chatClient.connect("mau", "mau")) {
             chatClient.chat();
+            
         }
         //System.out.println("You started the wrong file, mate. Run GUI.java!");
     }
