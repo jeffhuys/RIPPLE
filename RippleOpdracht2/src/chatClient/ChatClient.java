@@ -1,11 +1,11 @@
 package chatClient;
 
 import chatServer.ChatServiceRemoteInterface;
-import chatServer.Message;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,14 +21,11 @@ public class ChatClient {
         boolean login = false;
         try {
             remoteService = (ChatServiceRemoteInterface) Naming.lookup("rmi://127.0.0.1/ChatService");
-            String test = remoteService.sendMessage("Dit is een bericht2");
+            Random random = new Random();
+            String test = remoteService.sendMessage("Rnd: " + random.nextInt());
             login = remoteService.login("jeffhuys", "testpass");
             //System.out.println(test);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (RemoteException ex) {
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         return login;
@@ -38,6 +35,13 @@ public class ChatClient {
         System.out.println("Login succeeded.");
         System.out.println("Getting last 5 messages...");
         int messages = remoteService.messagesLength();
+        System.out.println("DEBUG: There are " + messages + " messages on the server.");
+        
+        for(int i = messages - 5; i < messages; i++) {
+            if(i >= 0) {
+                System.out.println(remoteService.getMessage(i).GetMessage());
+            }
+        }
         
     
     }
@@ -53,6 +57,6 @@ public class ChatClient {
     }
 
     public void printMessage() throws RemoteException {
-        System.out.println(remoteService.getMessage().GetMessage());
+        System.out.println(remoteService.getLastMessage().GetMessage());
     }
 }
