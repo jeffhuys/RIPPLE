@@ -21,4 +21,17 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
         System.out.println(berichten.get(berichten.size()-1).message);
         return berichten.get(berichten.size()-1);
     }
+
+    public boolean login(String username, String password) throws RemoteException {
+        if(username.equals("jeffhuys") && password.equals("testpass")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int messagesLength() throws RemoteException {
+        return 100000;
+    }
 }

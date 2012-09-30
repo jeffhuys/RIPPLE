@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class StartChatServiceRemote {
     
     public static void main(String[] args) {
-        
+        System.out.println("Started.");
         try {
             LocateRegistry.createRegistry(1099);
             ChatServiceRemoteInterface service = new ChatServiceRemoteImpl();

@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Acer
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
     String message;
     String user;
     public Message(){
