@@ -22,10 +22,14 @@ public class Message implements Serializable {
         message = mess;
         user = usr;
     }
-    public String GetMessage() {
+    public String getMessage() {
         return message;
     }
-    public String GetUser() {
+    public String getUser() {
         return user;
+    }
+    @Override
+    public String toString() {
+        return getMessage();
     }
 }

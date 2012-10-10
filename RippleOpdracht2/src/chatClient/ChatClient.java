@@ -19,11 +19,15 @@ public class ChatClient {
     
 
     public static ChatServiceRemoteInterface remoteService;
-
+    public static CallbackClientInterface callbackobj;
+    public static Sender s;
+    
     public boolean connect(String username, String password) {
         boolean login = false;
         try {
             remoteService = (ChatServiceRemoteInterface) Naming.lookup("rmi://127.0.0.1/ChatService");
+            callbackobj = new CallbackClientImpl();
+            remoteService.registerForCallback(callbackobj);
             //Random random = new Random();
             //String test = remoteService.sendMessage("Rnd: " + random.nextInt());
             login = remoteService.login(username, password);
@@ -40,11 +44,11 @@ public class ChatClient {
         int messages = remoteService.messagesLength();
         //System.out.println("DEBUG: There are " + messages + " messages on the server.");
         for (int i = messages - ((messages >= 5) ? 5 : messages); i < messages; i++) {
-            System.out.println(remoteService.getMessage(i).GetUser() + ": " + remoteService.getMessage(i).GetMessage());
+            System.out.println(remoteService.getMessage(i).getUser() + ": " + remoteService.getMessage(i).getMessage());
         }
         
         //System.out.println("Starting thread...");
-        Sender s = new Sender();
+        s = new Sender();
         Thread t = new Thread(s);
         s.setUsername(username);
         t.start();
@@ -61,7 +65,7 @@ public class ChatClient {
         System.out.print("Username: ");
         username = input.nextLine();
 
-        System.out.print("\nPassword: ");
+        System.out.print("Password: ");
         String password = input.nextLine();
         
         if (chatClient.connect(username, password)) {
@@ -71,7 +75,7 @@ public class ChatClient {
     }
 
     public void printMessage() throws RemoteException {
-        System.out.println(remoteService.getLastMessage().GetMessage());
+        System.out.println(remoteService.getLastMessage().getMessage());
     }
 }
 

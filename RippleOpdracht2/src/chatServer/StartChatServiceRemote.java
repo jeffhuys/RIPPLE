@@ -1,5 +1,7 @@
 package chatServer;
 
+import chatServer.ChatServiceRemoteInterface;
+import chatServer.ChatServiceRemoteImpl;
 import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteException;
 import com.almworks.sqlite4java.SQLiteStatement;
