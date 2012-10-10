@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatServiceRemoteInterface {
 
     private static ArrayList<Message> messages = new ArrayList<>();
-    //private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
 
     public ChatServiceRemoteImpl() throws RemoteException {
         //Message bericht = new Message("Test", "user");
@@ -90,5 +90,10 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
         } catch (SQLiteException ex) {
             Logger.getLogger(ChatServiceRemoteImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void pushMessage(Message message) throws RemoteException {
+        System.out.println("New message: " + message.message);
     }
 }
