@@ -25,4 +25,7 @@ public class Message implements Serializable {
     public String GetMessage() {
         return message;
     }
+    public String GetUser() {
+        return user;
+    }
 }

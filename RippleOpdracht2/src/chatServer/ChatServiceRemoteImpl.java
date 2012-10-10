@@ -20,8 +20,8 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
         //messages.add(bericht);
     }
 
-    public String sendMessage(String message) throws RemoteException {
-        Message bericht = new Message(message, "user");
+    public String sendMessage(String message, String user) throws RemoteException {
+        Message bericht = new Message(message, user);
         messages.add(bericht);
         return message;
     }

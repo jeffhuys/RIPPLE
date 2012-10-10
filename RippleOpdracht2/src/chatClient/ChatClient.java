@@ -15,6 +15,8 @@ import java.util.logging.Logger;
  * @author bartspiering
  */
 public class ChatClient {
+    private static String username;
+    
 
     public static ChatServiceRemoteInterface remoteService;
 
@@ -34,17 +36,19 @@ public class ChatClient {
 
     public void chat() throws RemoteException {
         System.out.println("Login succeeded.");
-        System.out.println("Getting last 5 messages...");
+        System.out.println("Getting last 5 messages...\n");
         int messages = remoteService.messagesLength();
-        System.out.println("DEBUG: There are " + messages + " messages on the server.");
+        //System.out.println("DEBUG: There are " + messages + " messages on the server.");
         for (int i = messages - ((messages >= 5) ? 5 : messages); i < messages; i++) {
-            System.out.println(remoteService.getMessage(i).GetMessage());
+            System.out.println(remoteService.getMessage(i).GetUser() + ": " + remoteService.getMessage(i).GetMessage());
         }
         
-        System.out.println("Starting thread...");
-        Thread t = new Thread(new Sender());
+        //System.out.println("Starting thread...");
+        Sender s = new Sender();
+        Thread t = new Thread(s);
+        s.setUsername(username);
         t.start();
-
+        
         //remoteService.register("etstatast", "peopaPROPA");
 
 
@@ -52,9 +56,16 @@ public class ChatClient {
 
     public static void main(String[] args) throws RemoteException {
         ChatClient chatClient = new ChatClient();
-        if (chatClient.connect("mau", "mau")) {
-            chatClient.chat();
+        
+        Scanner input = new Scanner(System.in);
+        System.out.print("Username: ");
+        username = input.nextLine();
 
+        System.out.print("\nPassword: ");
+        String password = input.nextLine();
+        
+        if (chatClient.connect(username, password)) {
+            chatClient.chat();
         }
         //System.out.println("You started the wrong file, mate. Run GUI.java!");
     }
@@ -66,18 +77,22 @@ public class ChatClient {
 
 class Sender implements Runnable {
 
+    private String username = "";
     @Override
     public void run() {
         String messageToSend;
         Scanner input = new Scanner(System.in);
         while (true) {
             System.out.print("Your message: ");
-            messageToSend = input.next();
+            messageToSend = input.nextLine();
             try {
-                ChatClient.remoteService.sendMessage(messageToSend);
+                ChatClient.remoteService.sendMessage(messageToSend, username);
             } catch (RemoteException ex) {
                 Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
