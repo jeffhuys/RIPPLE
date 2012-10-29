@@ -24,8 +24,9 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
     @Override
     public String notifyMe(Message message) throws RemoteException {
-        String returnMessage = "Call back received: " + message;
+        String returnMessage = message.getUser() + " zegt: " + message.getMessage();
         System.out.println(returnMessage);
+        ChatClient.chatScreen.listModel.add(0, message.getUser() + " zegt: " + message.getMessage());
         return returnMessage;
     }
 }// end CallbackClientImpl class   

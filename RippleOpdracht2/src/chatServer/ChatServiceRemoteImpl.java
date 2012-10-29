@@ -47,7 +47,8 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
     }
 
     @Override
-    public boolean login(String username, String password) throws RemoteException {
+    public boolean login(String username, String password) {
+        /*
         String usernameFromDB = "";
         String passwordFromDB = "";
 
@@ -76,6 +77,11 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
         } else {
             return false;
         }
+        */
+        
+        if(username.equals("jeff") && password.equals("password")) { return true; }
+        if(username.equals("mau") && password.equals("password")) { return true; }
+        return false;
     }
 
     @Override
@@ -128,16 +134,16 @@ public class ChatServiceRemoteImpl extends UnicastRemoteObject implements ChatSe
    private synchronized void doCallbacks() throws java.rmi.RemoteException {
         System.out.println("Callback started");
         for (int i = 0; i < clientList.size(); i++) {
-            System.out.println("Sturen naar " + i + " van de " +clientList.size()+ "verbonden clients\n");
+            System.out.println("Sturen naar " + (i+1) + " van de " +clientList.size()+ " verbonden clients\n");
             CallbackClientInterface nextClient = (CallbackClientInterface) clientList.elementAt(i);
             nextClient.notifyMe("init");
         }
         System.out.println("completed callback");
     }
     private synchronized void doCallbacks(Message message) throws java.rmi.RemoteException {
-        System.out.println("Callback started");
+        System.out.println("Callback started (Message message)");
         for (int i = 0; i < clientList.size(); i++) {
-            System.out.println("Sturen naar " + i + " van de " +clientList.size()+ "verbonden clients\n");
+            System.out.println("Sturen naar " + (i+1) + " van de " +clientList.size()+ " verbonden clients\n");
             CallbackClientInterface nextClient = (CallbackClientInterface) clientList.elementAt(i);
             nextClient.notifyMe(message);
         }
